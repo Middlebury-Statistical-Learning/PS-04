@@ -113,7 +113,7 @@ MSE_array <- rep(0, n_sim)
 bias_array <- rep(0, n_sim)
 for(i in 1:n_sim) {
   MSE_array[i] <- (truth$y_hat[i] - truth$y[i])^2
-  bias_array[i] < (truth$f_x - truth$y_hat)^2
+  bias_array[i] <- (truth$f_x[i] - truth$y_hat[i])^2
   
 }
 # MSE
