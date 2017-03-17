@@ -114,5 +114,12 @@ avg_mse <- mean((truth$y_hat - truth$y)^2)
 avg_bias_squared <- ((1/n_sim)*sum(truth$f_x - truth$y_hat))^2
 #variance of f_hat over n_sim vals
 var <- var(truth$y_hat)
-#sigma^2
-sigma_squared <- sigma^2
+#sigma^2 -- should be approx equal to actual sigma^2
+sigma_squared <- mean(truth$eps^2)
+#compare this^ to
+sigma^2
+
+
+#check if average mse = avg bias squared + variance of fhat + sigma squared
+avg_mse
+avg_bias_squared + var + sigma_squared
