@@ -84,12 +84,12 @@ for(i in 1:n_sim) {
   train_data <- generate_sample(f, n_sim = n_sim, sigma = sigma)
   
   # Fit the model:
-  model <- lm(y ~ x, data = train_data)
-  train_data_augmented <- model %>%
+  model_loop <- lm(y ~ x, data = train_data)
+  train_data_augmented_loop <- model_loop %>%
     augment(newdata=test_data) %>%
     tbl_df()
   # Get predictions
-  predictions[i] <- train_data_augmented$.fitted
+  predictions[i] <- train_data_augmented_loop$.fitted
     # yhat = fhat(x) at point x0
   
   
@@ -113,4 +113,20 @@ truth <- truth %>%
   mutate(y_hat=predictions)
 
 # Compute MSE, (Avg Bias of f_hat)^2, Variance of f_hat, sigma^2:
-# FILL THIS IN:
+
+# Avg MSE over n_sim values
+MSE <- summarise(truth, mse = mean((y-y_hat)^2))
+MSE
+# (Avg bias of f_hat)^2
+bias <- summarise(truth, avg_bias_squared = (mean(y-y_hat))^2)
+bias
+# Variance of f_hat
+variance <- summarise(truth, variance = var(y_hat))
+variance
+# sigma^2
+sigma^2
+
+# The sum of (average bias of f_hat)^2 + variance of f_hat + sigma^2 is approximately
+# equal to the Mean Square Error
+bias$avg_bias_squared + variance$variance + sigma^2
+MSE
